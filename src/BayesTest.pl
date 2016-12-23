@@ -10,36 +10,23 @@ $doc1 = ("w1 w2 w2 w5 w8");
 $doc2 = ("w3 w7 w7 w8 w9");
 $doc3 = ("w1 w3 w4 w6");
 $doc4 = ("w2 w3 w4 w7 w8");
-$delta = 1;             # 計算がおかしくならないように
+$delta = 1;                             # 計算がおかしくならないように
 
 &main();
 
 sub main {
-    @cat0 = ();	# 空集合
-    @cat1 = ();
+    # 辞書1.2.3 => Category0
+    push(@category0, split(" ",$doc0), split(" ",$doc1), split(" ",$doc2));
+    print 'クラス0中に出現する単語数=',$#category0+1,"個\n";
+    # 辞書4.5 => Category1
+    push (@category1, split(" ",$doc3), split(" ",$doc4));
+    print 'クラス1中に出現する単語数=',$#category1+1,"個\n";
 
-    my @d0 = split(" ",$doc0);
-    my @d1 = split(" ",$doc1);
-    my @d2 = split(" ",$doc2);
-
-    push (@d0,@d1,@d2);
-    my @cat0 = @d0;
-    $cat0 = @cat0;	#クラス0中に出現する単語数
-    print 'クラス0中に出現する単語数=',$cat0,"個\n";
-
-    my @d3 = split(" ",$doc3);
-    my @d4 = split(" ",$doc4);
-
-    push (@d3,@d4);
-    my @cat1 = @d3;
-    $cat1 = @cat1;  #クラス1中に出現する単語数
-    print 'クラス1中に出現する単語数=',$cat1,"個\n";
-
-# サブルーチンに複数の配列を渡すにはリファレンスを使用
-    my $refCat0 = \@cat0;	# ポインタを生成
-    my $refCat1 = \@cat1;	# ポインタを生成
-    my @data = ($refCat0,$refCat1);
-    &analysis($refCat0,$refCat1);
+    # サブルーチンに複数の配列を渡すにはリファレンスを使用
+    my $refCategory0 = \@category0;	# ポインタを生成
+    my $refCategory1 = \@category1;	# ポインタを生成
+    my @data = ($refCategory0,$refCategory1);
+    &analysis($refCategory0,$refCategory1);
 }
 
 sub analysis {  my($r0,$r1) = @_;		# リファレンスをスカラ型で受け取る
